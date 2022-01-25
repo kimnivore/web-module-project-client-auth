@@ -1,10 +1,75 @@
+// import React, {useState } from 'react';
+// import axios from 'axios';
+
+// const Login = () => {
+//     const [credentials, setCredentials] = useState({
+//         username: '',
+//         password: ''
+//     });
+   
+//     const handleChange = (e) => {
+//         setCredentials({
+//             ...credentials,
+//             [e.target.name]: e.target.value
+//         });
+//     };
+
+//     const login = (e) => {
+//         e.preventDefault();
+//         console.log(this.state.credentials);
+//         axios.post('http://localhost:3000/api/login', this.state.credentials)
+//             .then(resp => {
+//                 console.log(resp);
+//                 localStorage.setItem('username', resp.data.username);
+//                 localStorage.setItem('role', resp.data.role);
+//                 localStorage.setItem('token', resp.data.token);
+//                 this.props.history.push('/friendslist');
+//             })
+//             .catch(err => {
+//                 console.log(err);
+//             });
+//     };
+
+//         return (
+//             <div className='login'>
+//                 <h1>LOGIN</h1>
+//                 <form onSubmit={this.login}>
+//                     <label>    
+//                         Username
+//                         <input
+//                             type='text'
+//                             name='username'
+//                             value={this.state.credentials.username}
+//                             onChange={handleChange}
+//                         />
+//                     </label>
+//                     <label>
+//                         Password
+//                         <input 
+//                             type='password'
+//                             name='password'
+//                             value={this.state.credentials.password}
+//                             onChange={handleChange}
+//                             />
+//                     </label>
+//                     <button>Submit</button>
+//                 </form>
+//             </div>
+//         )
+//     }
+
+// export default Login;
+
 import React from 'react';
+import axios from 'axios';
 
 class Login extends React.Component {
     state = {
         credentials: {
             username: '',
             password: '',
+            role: '',
+            token: ''
         }
     };
 
@@ -15,30 +80,47 @@ class Login extends React.Component {
                 [e.target.name]: e.target.value
             }
         });
-    }
+    };
 
     login = e => {
         e.preventDefault();
         console.log(this.state.credentials);
-        axios.post('http://localhost:3000/api/login', this.state.credentials)
+        axios.post('http://localhost:9000/api/login', this.state.credentials)
             .then(resp => {
                 console.log(resp);
+                localStorage.setItem('username', resp.data.username);
+                localStorage.setItem('role', resp.data.role);
+                localStorage.setItem('token', resp.data.token);
+                this.props.history.push('/friendslist');
             })
-    }
+            .catch(err => {
+                console.log(err);
+            });
+    };
 
     render() {
         return (
-            <div>
+            <div className='login'>
                 <h1>LOGIN</h1>
-                <form>
-                    <input
-                        type='text'
-                        name='username'
-                     />
-                     <input 
-                        type='password'
-                        name='password'
+                <form onSubmit={this.login}>
+                    <label>    
+                        Username
+                        <input
+                            type='text'
+                            name='username'
+                            value={this.state.credentials.username}
+                            onChange={this.handleChange}
                         />
+                    </label>
+                    <label>
+                        Password
+                        <input 
+                            type='password'
+                            name='password'
+                            value={this.state.credentials.password}
+                            onChange={this.handleChange}
+                            />
+                    </label>
                     <button>Submit</button>
                 </form>
             </div>

@@ -10,3 +10,9 @@ html, body, #root {
 label {
     display:block;
 }
+
+.login {
+    display: flex;
+    flex-direction: column;
+    
+}
